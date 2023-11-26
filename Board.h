@@ -29,6 +29,7 @@ public:
     void generateBoard(int rows, int columns);
     void printBoard() const;
     int generateRandBoard();
+    int getSize();
     void SetDifficulty(int x);
     Tile findTileByPos(int pos) const;
     // Getter for the board

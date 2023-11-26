@@ -18,7 +18,9 @@ private:
 public:
     Players(string name);
 
-    int Play(int max);
+    int Play(Board x);
+
+    void Rolldice(Board x);
 
     void updatepos(int x);
 

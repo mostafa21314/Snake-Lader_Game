@@ -20,36 +20,8 @@ int main() {
 
 
     Players user1("Marwan");
+    user1.Play(x);
 
-
-
-    cout << "Do you want to roll the dice? press 1 " << endl;
-    cin >> input;
-    while (input == 1){
-
-            userpos = user1.Play(total); // Update userpos directly
-             if (x.findTileByPos(userpos).type == -1) {
-                cout << "You have moved to tile " << x.findTileByPos(userpos).pos << endl;
-            } else if (x.findTileByPos(userpos).type == -2) {
-                int old = userpos;
-                userpos = x.findTileByPos(userpos).destination;
-                user1.updatepos(userpos);
-                cout << "Your tile was a ladder. You moved from tile " << old << " to tile " << userpos << endl;
-            } else if (x.findTileByPos(userpos).type == -3) {
-                int old = userpos;
-                userpos = x.findTileByPos(userpos).destination;
-                user1.updatepos(userpos);
-                cout << "Your tile was a snake. You moved from tile " << old << " to tile " << userpos << endl;
-            }
-            if (userpos == total){
-                cout << "You Win!";
-                break;
-            }
-
-        cout << "Do you want to roll the dice? Press 1." << endl;
-            cin >> input;
-
-    }
 
 
 

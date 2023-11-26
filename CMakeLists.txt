@@ -9,4 +9,5 @@ add_executable(Snake_and_Ladder main.cpp
         Dice.cpp
         Dice.h
         Players.cpp
-        Players.h)
+        Players.h
+)

@@ -130,3 +130,7 @@ Tile Board::findTileByPos(int pos) const {
     // Return a default Tile with all values set to -1 if not found
     return Tile(pos, -1, -1);
 }
+
+int Board::getSize() {
+    return rows_*columns_;
+}
