@@ -3,6 +3,7 @@
 #include <cstdlib>
 #include <ctime>
 #include <random>
+#include <queue>
 #include "Board.h"
 #include "Dice.h"
 #include "Players.h"
@@ -14,13 +15,41 @@ int main() {
     int userpos = 1;
     int input;
 
-    x.SetDifficulty(90);
-    int total = x.generateRandBoard();
+    x.SetDifficulty(70);
+    x.Setladdertosnakeratio(0.5);
+    x.generateBoard(10,10);
     x.printBoard();
 
+    int numPlayers;
+    std::cout << "Enter the number of players: ";
+    std::cin >> numPlayers;
 
-    Players user1("Marwan");
-    user1.Play(x);
+    std::queue<Players> playersQueue;
+
+    // Create and enqueue players based on user input
+    for (int i = 1; i <= numPlayers; ++i) {
+        playersQueue.push(Players("Player " + std::to_string(i)));
+    }
+
+    while (!playersQueue.empty()) {
+        Players currentPlayer = playersQueue.front();
+        playersQueue.pop();
+
+        std::cout << "It's " << currentPlayer.getname() << "'s turn." << std::endl;
+
+        currentPlayer.Play(x);
+
+        // Check if the player won
+        if (currentPlayer.Getpos() == x.getSize()) {
+            std::cout << currentPlayer.getname() << " wins!" << std::endl;
+            break;
+        }
+
+        // Add the player back to the end of the queue for the next turn
+        playersQueue.push(currentPlayer);
+    }
+
+    return 0;
 
 
 

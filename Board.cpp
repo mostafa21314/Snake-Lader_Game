@@ -25,8 +25,14 @@ void Board::generateBoard(int rows, int columns) {
             if (random_percentage < NORMAL_TILE_PERCENTAGE) {
                 subboard.emplace_back(count, -1, tiletype);
             } else {
-                std::uniform_int_distribution<int> distribution2(1, rows_ * columns_);
-                int randint = distribution2(gen);
+                int randint;
+                if(random_percentage > NORMAL_TILE_PERCENTAGE + ((100 - NORMAL_TILE_PERCENTAGE)*LaddertosnakeRatio)){
+                    std::uniform_int_distribution<int> distribution2(1, count);
+                    randint = distribution2(gen);
+                } else{
+                    std::uniform_int_distribution<int> distribution2(count, rows_ * columns_);
+                    randint = distribution2(gen);
+                }
 
                 if (count  == rows_*columns_) {
                     subboard.emplace_back(count, -1, -1);
@@ -51,6 +57,7 @@ void Board::generateBoard(int rows, int columns) {
         }
         board_.push_back(subboard);
     }
+    Boardfixer();
 }
 
 void Board::printBoard() const {
@@ -63,8 +70,10 @@ void Board::printBoard() const {
 }
 
 int Board::generateRandBoard() {
-    rows_ = std::rand() % 16 + 5;
-    columns_ = std::rand() % 16 + 5;
+    srand(std::time(0));
+    int randinteger = std::rand() % 11 + 5;
+    rows_ = randinteger;
+    columns_ = randinteger;
     int count = 1;
 
     // Seed the random number generator
@@ -77,15 +86,23 @@ int Board::generateRandBoard() {
 
         for (int j = 0; j < columns_; j++) {
             int tiletype = -1;
+
+
+
             std::uniform_int_distribution<int> distribution(0, 99);
             int random_percentage = distribution(gen);
 
             if (random_percentage < NORMAL_TILE_PERCENTAGE) {
                 subboard.emplace_back(count, -1, tiletype);
             } else {
-                std::uniform_int_distribution<int> distribution2(1, rows_ * columns_);
-                int randint = distribution2(gen);
-
+                int randint;
+                if(random_percentage > NORMAL_TILE_PERCENTAGE + ((100 - NORMAL_TILE_PERCENTAGE)*LaddertosnakeRatio)){
+                    std::uniform_int_distribution<int> distribution2(1, count);
+                    randint = distribution2(gen);
+                } else{
+                    std::uniform_int_distribution<int> distribution2(count, rows_ * columns_);
+                    randint = distribution2(gen);
+                }
                 if (randint > count) {
                     tiletype = -2; // if ladder
                     subboard.emplace_back(count, tiletype, randint);
@@ -97,14 +114,12 @@ int Board::generateRandBoard() {
                 } else {
                         subboard.emplace_back(count, -1, -1);
                     }
-
-
-
             }
             count += 1; // Increment by 1 for each tile
         }
         board_.push_back(subboard);
     }
+    Boardfixer();
     return rows_*columns_;
 }
 
@@ -134,3 +149,59 @@ Tile Board::findTileByPos(int pos) const {
 int Board::getSize() {
     return rows_*columns_;
 }
+
+void Board::Setladdertosnakeratio(float x) {
+    LaddertosnakeRatio = x;
+
+}
+
+#include <iostream>
+#include <random>
+#include <ctime>
+
+void Board::Boardfixer() {
+    std::random_device rd;
+    std::mt19937 gen(rd());
+
+    int count = 0;
+
+    for (auto& row : board_) {
+        for (auto& tile : row) {
+            if (tile.type == -3) {
+                count++;
+            } else if (tile.type == -2) {  // Fix the condition here
+                count = 0;
+            }
+
+            if (count >= 6) {
+                int size = rows_ * columns_;
+                std::uniform_int_distribution<int> distribution3(count, size);
+                int destination = distribution3(gen);
+
+                std::uniform_int_distribution<int> distribution4(1, 6);  // Adjust range as needed
+                int randomnum = distribution4(gen);
+
+                int newpos = tile.pos - randomnum;
+                replaceTileByPosition(board_, newpos, -2, destination);
+            }
+        }
+    }
+}
+
+
+void Board::replaceTileByPosition(vector <std::vector<Tile>> &board, int x, int newValue, int newdestination) {
+    for (auto& row : board) {
+        for (auto& tile : row) {
+            if (tile.pos == x) {
+                tile.type = newValue;
+                tile.destination = newdestination;
+                return; // Break out of the loop once the tile is replaced
+            }
+        }
+    }
+
+    // If control reaches here, the position was not found
+    std::cout << "Tile with position " << x << " not found." << std::endl;
+
+}
+

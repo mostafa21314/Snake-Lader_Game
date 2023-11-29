@@ -21,7 +21,7 @@ int Players::Play(Board x) {
 
     cout << "Do you want to roll the dice? press 1 " << endl;
     cin >> input;
-    while (input == 1) {
+    if (input == 1) {
         Rolldice(x);
 
 
@@ -37,13 +37,11 @@ int Players::Play(Board x) {
             cout << "Your tile was a snake. You moved from tile " << old << " to tile " << position << endl;
         }
 
-        cout << "Do you want to roll the dice? Press 1." << endl;
-        cin >> input;
-
         if (position == x.getSize()){
             cout << "You Win!";
-            break;
-        }}
+        }
+
+        }
 
 
     return position;
@@ -69,6 +67,8 @@ void Players::Rolldice(Board x) {
     int result = v.roll();
     if(position + result <= x.getSize()){
         position = position + result;
+    } else {
+        cout << "You rolled a " << result << " which is " << result - (x.getSize() - position) << "  than required, Try again!" << endl;
     }
 
 }

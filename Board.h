@@ -31,9 +31,12 @@ public:
     int generateRandBoard();
     int getSize();
     void SetDifficulty(int x);
+    void Setladdertosnakeratio(float x);
     Tile findTileByPos(int pos) const;
     // Getter for the board
     const std::vector<std::vector<Tile>>& getBoard() const;
+    void replaceTileByPosition(std::vector<std::vector<Tile>>& board, int x, int newValue, int newdestination);
+    void Boardfixer();
 
 
 private:
@@ -42,6 +45,7 @@ private:
     int columns_;
     vector<vector<Tile>> board_;
     int NORMAL_TILE_PERCENTAGE = 85;
+    float LaddertosnakeRatio;
 
 };
 
