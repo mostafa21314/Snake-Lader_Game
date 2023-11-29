@@ -180,9 +180,10 @@ void Board::Boardfixer() {
 
                 std::uniform_int_distribution<int> distribution4(1, 6);  // Adjust range as needed
                 int randomnum = distribution4(gen);
+                replaceTileByPosition(board_, tile.pos, -1, destination);// make the snake tile a normal tile to avoid a rare condition of still having 6 snakes when there is 12 initially
 
                 int newpos = tile.pos - randomnum;
-                replaceTileByPosition(board_, newpos, -2, destination);
+                replaceTileByPosition(board_, newpos, -2, destination); // replace a randomtile inbetween all the snakes with a ladder
             }
         }
     }
