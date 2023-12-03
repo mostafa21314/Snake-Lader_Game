@@ -229,30 +229,7 @@ void Board::dispGraph() const
 
 // Get Non-Zero edges from adjacency matrix
 // and store them in array edges[].
-void Board::getEdges()
-{
-    int r , c;
-    int i = 0;
-    weightType weight;
 
-    // Only examin weights above the diagonal
-    for (r = 0; r <= V-2; r++)
-        for (c = r+1; c <= V-1; c++)
-        {
-            weight = AdjMatrix[r][c];
-            if (weight > 0)
-            {
-                // save (r,c,weight) in edges[i]
-                edges[i].u = r;
-                edges[i].v = c;
-                edges[i].w = weight;
-                i++;
-            }
-        }
-
-    E = i;		// Number of non-zero edges
-
-}
 
 // Get number of vertices (V)
 int Board::No_of_Verices() const
@@ -365,6 +342,7 @@ void Board::addEdge(int u, int v, int weight) {
 
         // Assuming an undirected graph
         edges.push_back({u, v, weight});
+        map[u].push_back(v);
 
 }
 
@@ -391,6 +369,18 @@ Edge Board::findEdgeByU(int u) {
         // If no matching edge is found, return an edge with default values
         return {0, 0, 0};  // You may need to adjust this depending on your Edge constructor
     }
+}
+
+void Board::printAdjacencyList() const {
+    std::cout << "Adjacency List:\n";
+    for (int i = 1; i < rows_*columns_; ++i) {
+        std::cout << i << " -> ";
+        for (int vertex : map[i]) {
+            std::cout << vertex << " ";
+        }
+        std::cout << std::endl;
+    }
+
 }
 
 

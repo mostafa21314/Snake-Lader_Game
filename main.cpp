@@ -17,7 +17,7 @@ int main() {
 
     x.SetDifficulty(90);
     x.Setladdertosnakeratio(0.5);
-    x.generateBoard(10,10);
+    x.generateRandBoard();
     x.printBoard();
     x.dispEdges();
 

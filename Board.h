@@ -10,6 +10,7 @@ using namespace std;
 #include <string>
 #include <vector>
 #include "Edge.h"
+#include <list>
 
 
 const int Vmax = 200;					// Maximum number of vertices
@@ -56,6 +57,7 @@ public:
     void fileAppend(string);
     void updateEdgeByU(int u, int newV, weightType newW);
     Edge findEdgeByU(int u);
+    void printAdjacencyList() const;
 
 
     void Boardfixer();
@@ -67,6 +69,7 @@ private:
 
     int V, E;							// No.of vertices (V) and edges (E)
     vector<Edge> edges;			// Array of non-zero edges
+    list<int> map[Vmax];
     Edge tree[Vmax];						// MST
     weightType distance[Vmax];			// Distance array for shortest paths
     int via[Vmax];						// Via array for shortest paths
