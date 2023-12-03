@@ -15,10 +15,11 @@ int main() {
     int userpos = 1;
     int input;
 
-    x.SetDifficulty(70);
+    x.SetDifficulty(90);
     x.Setladdertosnakeratio(0.5);
     x.generateBoard(10,10);
     x.printBoard();
+    x.dispEdges();
 
     int numPlayers;
     std::cout << "Enter the number of players: ";

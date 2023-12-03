@@ -25,15 +25,15 @@ int Players::Play(Board x) {
         Rolldice(x);
 
 
-        if (x.findTileByPos(position).type == -1) {
-            cout << "You have moved to tile " << x.findTileByPos(position).pos << endl;
-        } else if (x.findTileByPos(position).type == -2) {
+        if (x.findEdgeByU(position).w == 1) {
+            cout << "You have moved to tile " << position+1 << endl;
+        } else if (x.findEdgeByU(position).u<x.findEdgeByU(position).v) {
             int old = position;
-            position = x.findTileByPos(position).destination;
+            position = x.findEdgeByU(position).v;
             cout << "Your tile was a ladder. You moved from tile " << old << " to tile " << position << endl;
-        } else if (x.findTileByPos(position).type == -3) {
+        } else if (x.findEdgeByU(position).u>x.findEdgeByU(position).v) {
             int old = position;
-            position = x.findTileByPos(position).destination;
+            position = x.findEdgeByU(position).v;
             cout << "Your tile was a snake. You moved from tile " << old << " to tile " << position << endl;
         }
 

@@ -1,5 +1,7 @@
 #include "Board.h"
 #include <iostream>
+#include <iomanip>
+#include <algorithm>
 
 Board::Board() {
 }
@@ -23,35 +25,47 @@ void Board::generateBoard(int rows, int columns) {
             int random_percentage = distribution(gen);
 
             if (random_percentage < NORMAL_TILE_PERCENTAGE) {
-                subboard.emplace_back(count, -1, tiletype);
+                // If it's a normal tile, set destination to the next tile's position
+                int nextTilePos;
+                if(count==getSize()){
+                    nextTilePos=count;
+                }else{
+                nextTilePos = count + 1;}
+                subboard.emplace_back(count, -1, nextTilePos);
+                addEdge(count,nextTilePos,1);
             } else {
                 int randint;
-                if(random_percentage > NORMAL_TILE_PERCENTAGE + ((100 - NORMAL_TILE_PERCENTAGE)*LaddertosnakeRatio)){
+                int futureVertex = -1;  // Initialize with an invalid value
+
+                if (random_percentage > NORMAL_TILE_PERCENTAGE + ((100 - NORMAL_TILE_PERCENTAGE) * LaddertosnakeRatio)) {
                     std::uniform_int_distribution<int> distribution2(1, count);
                     randint = distribution2(gen);
-                } else{
+                    futureVertex = randint;
+                } else {
                     std::uniform_int_distribution<int> distribution2(count, rows_ * columns_);
                     randint = distribution2(gen);
+                    futureVertex = randint;
                 }
 
-                if (count  == rows_*columns_) {
+                if (count == rows_ * columns_) {
                     subboard.emplace_back(count, -1, -1);
-
-
                 } else {
-
-
-                if (randint > count) {
-                    tiletype = -2; // if ladder
-                    subboard.emplace_back(count, tiletype, randint);
-                } else if (randint < count) {
-                    tiletype = -3; // if snake
-                    subboard.emplace_back(count, tiletype, randint);
-                } else {
-                    subboard.emplace_back(count, -1, -1);
-                }}
-
-
+                    if (randint > count) {
+                        tiletype = -2; // if ladder
+                        subboard.emplace_back(count, tiletype, futureVertex);
+                        const weightType EDGE_WEIGHT = abs(count - randint);
+                        // Add edge to the graph
+                        addEdge(count, randint, EDGE_WEIGHT); // Define EDGE_WEIGHT as needed
+                    } else if (randint < count) {
+                        tiletype = -3; // if snake
+                        subboard.emplace_back(count, tiletype, futureVertex);
+                        const weightType EDGE_WEIGHT = abs(count - randint);
+                        // Add edge to the graph
+                        addEdge(count, randint, EDGE_WEIGHT); // Define EDGE_WEIGHT as needed
+                    } else {
+                        subboard.emplace_back(count, -1, count+1);
+                    }
+                }
             }
             count += 1; // Increment by 2 for each tile
         }
@@ -59,6 +73,8 @@ void Board::generateBoard(int rows, int columns) {
     }
     Boardfixer();
 }
+
+
 
 void Board::printBoard() const {
     for (const auto& row : board_) {
@@ -86,36 +102,53 @@ int Board::generateRandBoard() {
 
         for (int j = 0; j < columns_; j++) {
             int tiletype = -1;
-
-
-
             std::uniform_int_distribution<int> distribution(0, 99);
             int random_percentage = distribution(gen);
 
             if (random_percentage < NORMAL_TILE_PERCENTAGE) {
-                subboard.emplace_back(count, -1, tiletype);
+                // If it's a normal tile, set destination to the next tile's position
+                int nextTilePos;
+                if(count==getSize()){
+                    nextTilePos=count;
+                }else{
+                    nextTilePos = count + 1;}
+                subboard.emplace_back(count, -1, nextTilePos);
+                addEdge(count,nextTilePos,1);
             } else {
                 int randint;
-                if(random_percentage > NORMAL_TILE_PERCENTAGE + ((100 - NORMAL_TILE_PERCENTAGE)*LaddertosnakeRatio)){
+                int futureVertex = -1;  // Initialize with an invalid value
+
+                if (random_percentage > NORMAL_TILE_PERCENTAGE + ((100 - NORMAL_TILE_PERCENTAGE) * LaddertosnakeRatio)) {
                     std::uniform_int_distribution<int> distribution2(1, count);
                     randint = distribution2(gen);
-                } else{
-                    std::uniform_int_distribution<int> distribution2(count, rows_ * columns_);
+                    futureVertex = randint;
+                } else {
+                    std::uniform_int_distribution<int> distribution2(count, min(count+(rows_*5),rows_ * columns_));
                     randint = distribution2(gen);
+                    futureVertex = randint;
                 }
-                if (randint > count) {
-                    tiletype = -2; // if ladder
-                    subboard.emplace_back(count, tiletype, randint);
-                } else if (randint < count) {
-                    tiletype = -3; // if snake
-                    subboard.emplace_back(count, tiletype, randint);
-                }else if (count  == rows_*columns_) {
+
+                if (count == rows_ * columns_) {
                     subboard.emplace_back(count, -1, -1);
                 } else {
-                        subboard.emplace_back(count, -1, -1);
+                    if (randint > count) {
+                        tiletype = -2; // if ladder
+                        subboard.emplace_back(count, tiletype, futureVertex);
+                        const weightType EDGE_WEIGHT = abs(count - randint);
+                        // Add edge to the graph
+                        addEdge(count, randint, EDGE_WEIGHT); // Define EDGE_WEIGHT as needed
+                    } else if (randint < count) {
+                        tiletype = -3; // if snake
+                        subboard.emplace_back(count, tiletype, futureVertex);
+                        const weightType EDGE_WEIGHT = abs(count - randint);
+                        // Add edge to the graph
+                        addEdge(count, randint, EDGE_WEIGHT); // Define EDGE_WEIGHT as needed
+                    } else {
+                        subboard.emplace_back(count, -1, count+1);
                     }
+                }
             }
-            count += 1; // Increment by 1 for each tile
+            count += 1; // Increment by 2 for each tile
         }
         board_.push_back(subboard);
     }
@@ -146,6 +179,8 @@ Tile Board::findTileByPos(int pos) const {
     return Tile(pos, -1, -1);
 }
 
+
+
 int Board::getSize() {
     return rows_*columns_;
 }
@@ -158,6 +193,128 @@ void Board::Setladdertosnakeratio(float x) {
 #include <iostream>
 #include <random>
 #include <ctime>
+
+
+// Map vertex number (0,1,2,..) to (A,B,C,..)
+char Board::Vname(const int s) const
+{
+    return char(s+65);
+}
+
+// Get Graph from text File (file name is stored in string fname)
+// Graph is stored in adjacency matrix, a copy is returned in A[][]
+
+
+// Display Adjacency Matrix
+void Board::dispGraph() const
+{
+    // Displaying the adjacency matrix
+
+    // Displaying the connections between tiles based on the graph
+    cout << "\nConnections between Tiles:\n";
+    for (const auto& row : board_) {
+        for (const Tile& tile : row) {
+            cout << "Tile " << tile.pos << ": ";
+
+            if (tile.type == -2) {
+                cout << "Ladder to Tile " << tile.destination << endl;
+            } else if (tile.type == -3) {
+                cout << "Snake to Tile " << tile.destination << endl;
+            } else {
+                cout << "No connection" << endl;
+            }
+        }
+    }
+}
+
+// Get Non-Zero edges from adjacency matrix
+// and store them in array edges[].
+void Board::getEdges()
+{
+    int r , c;
+    int i = 0;
+    weightType weight;
+
+    // Only examin weights above the diagonal
+    for (r = 0; r <= V-2; r++)
+        for (c = r+1; c <= V-1; c++)
+        {
+            weight = AdjMatrix[r][c];
+            if (weight > 0)
+            {
+                // save (r,c,weight) in edges[i]
+                edges[i].u = r;
+                edges[i].v = c;
+                edges[i].w = weight;
+                i++;
+            }
+        }
+
+    E = i;		// Number of non-zero edges
+
+}
+
+// Get number of vertices (V)
+int Board::No_of_Verices() const
+{
+    return V;
+}
+
+// Get Number of Non-zero edges (E)
+int Board::No_of_Edges() const
+{
+    return E;
+}
+
+// Output an edge (e): Vertex names and weight
+void Board::printEdge(Edge e) const
+{
+    cout << Vname(e.u) << " " << Vname(e.v) << " " << e.w << endl;
+}
+
+// Display Graph Edges
+void Board::dispEdges() const
+{
+    std::cout << "Graph Edges:\n";
+    for (const Edge& edge : edges) {
+        std::cout << "Edge (" << edge.u << ", " << edge.v << ") with weight " << edge.w << "\n";
+    }
+}
+
+// Shortest paths from node s
+// uses Dijkstra's Algorithm
+void Board::shPath(int s)
+{
+    // Implement the function here
+}
+
+// Print path (vertex names) from source (s) to destination (i)
+void Board::printPath(int s, int i) const
+{
+    // Implement the function here
+}
+
+// Node Visit Function
+void Board::visit(int k)
+{
+    // Implement the function here
+}
+
+// Depth First Search Traversal
+void Board::DFS()
+{
+    // Implement the function here
+}
+
+// Minimum Spanning Tree
+void Board::MST()
+{
+    // Implement the function here
+}
+
+void Board:: setNumNodes(int size){
+    V = size;
+}
 
 void Board::Boardfixer() {
     std::random_device rd;
@@ -173,17 +330,15 @@ void Board::Boardfixer() {
                 count = 0;
             }
 
-            if (count >= 6) {
+            if (count >= 5) {
                 int size = rows_ * columns_;
                 std::uniform_int_distribution<int> distribution3(count, size);
                 int destination = distribution3(gen);
 
                 std::uniform_int_distribution<int> distribution4(1, 6);  // Adjust range as needed
                 int randomnum = distribution4(gen);
-                replaceTileByPosition(board_, tile.pos, -1, destination);// make the snake tile a normal tile to avoid a rare condition of still having 6 snakes when there is 12 initially
-
-                int newpos = tile.pos - randomnum;
-                replaceTileByPosition(board_, newpos, -2, destination); // replace a randomtile inbetween all the snakes with a ladder
+                replaceTileByPosition(board_, tile.pos, -1, min(getSize(), tile.pos+1));// make the snake tile a normal tile to avoid a rare condition of still having 6 snakes when there is 12 initially
+                updateEdgeByU(tile.pos,min(getSize(), tile.pos+1),1);
             }
         }
     }
@@ -205,4 +360,38 @@ void Board::replaceTileByPosition(vector <std::vector<Tile>> &board, int x, int 
     std::cout << "Tile with position " << x << " not found." << std::endl;
 
 }
+
+void Board::addEdge(int u, int v, int weight) {
+
+        // Assuming an undirected graph
+        edges.push_back({u, v, weight});
+
+}
+
+void Board::updateEdgeByU(int u, int newV, weightType newW) {
+    for (Edge& edge : edges) {
+        if (edge.u == u) {
+            // Update the edge with new values for v and w
+            edge.v = newV;
+            edge.w = newW;
+            // Assuming there's only one edge with the given u, you can break the loop
+            break;
+        }
+    }
+}
+
+Edge Board::findEdgeByU(int u) {
+    auto it = std::find_if(edges.begin(), edges.end(), [u](const Edge& edge) {
+        return edge.u == u;
+    });
+
+    if (it != edges.end()) {
+        return *it;
+    } else {
+        // If no matching edge is found, return an edge with default values
+        return {0, 0, 0};  // You may need to adjust this depending on your Edge constructor
+    }
+}
+
+
 
