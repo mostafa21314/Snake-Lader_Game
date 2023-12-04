@@ -58,6 +58,7 @@ public:
     void updateEdgeByU(int u, int newV, weightType newW);
     Edge findEdgeByU(int u);
     void printAdjacencyList() const;
+    void BFS (int);
 
 
     void Boardfixer();
