@@ -15,10 +15,9 @@ int main() {
     int userpos = 1;
     int input;
 
-    x.SetDifficulty(90);
+    x.SetDifficulty(50);
     x.Setladdertosnakeratio(0.5);
-    x.generateRandBoard();
-    x.printBoard();
+    x.generateBoard(10,10);
     x.dispEdges();
 
     int numPlayers;
@@ -38,12 +37,20 @@ int main() {
 
         std::cout << "It's " << currentPlayer.getname() << "'s turn." << std::endl;
 
-        currentPlayer.Play(x);
+        int xz = currentPlayer.Play(x);
+        int sixcounter = 0;
 
-        // Check if the player won
-        if (currentPlayer.Getpos() == x.getSize()) {
-            std::cout << currentPlayer.getname() << " wins!" << std::endl;
-            break;
+        while(xz == 6 && sixcounter < 2){
+            sixcounter++;
+            cout << "It's " << currentPlayer.getname() << "'s turn." << std::endl;
+            xz = currentPlayer.Play(x);
+
+            // Check if the player won
+            if (currentPlayer.Getpos() == x.getSize() || xz == 66) {
+                std::cout << currentPlayer.getname() << " wins!" << std::endl;
+                break;
+            }
+
         }
 
         // Add the player back to the end of the queue for the next turn

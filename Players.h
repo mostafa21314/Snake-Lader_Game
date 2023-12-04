@@ -14,13 +14,14 @@ class Players {
 private:
     int  position;
     string Name;
+    int sixcounter = 0;
 
 public:
     Players(string name);
 
     int Play(Board x);
 
-    void Rolldice(Board x);
+    bool Rolldice(Board x, int&result);
 
     void updatepos(int x);
 

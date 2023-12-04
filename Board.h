@@ -58,7 +58,6 @@ public:
     void updateEdgeByU(int u, int newV, weightType newW);
     Edge findEdgeByU(int u);
     void printAdjacencyList() const;
-    void BFS (int);
 
 
     void Boardfixer();
@@ -85,7 +84,6 @@ private:
 
     int rows_;
     int columns_;
-    vector<vector<Tile>> board_;
     int NORMAL_TILE_PERCENTAGE = 85;
     float LaddertosnakeRatio;
 

@@ -18,15 +18,20 @@ Players::Players(string name) {
 
 int Players::Play(Board x) {
     int input;
+    int rollnum;
 
     cout << "Do you want to roll the dice? press 1 " << endl;
     cin >> input;
     if (input == 1) {
-        Rolldice(x);
+        bool torf = Rolldice(x,rollnum);
 
 
+        if(torf){
         if (x.findEdgeByU(position).w == 1) {
-            cout << "You have moved to tile " << position+1 << endl;
+            if(rollnum == 0){
+                cout << "You have rolled 6 three times in a row which renders ur turn void" << endl;
+            } else {
+            cout << "You have moved to tile " << position << endl;}
         } else if (x.findEdgeByU(position).u<x.findEdgeByU(position).v) {
             int old = position;
             position = x.findEdgeByU(position).v;
@@ -38,10 +43,12 @@ int Players::Play(Board x) {
         }
 
         if (position == x.getSize()){
-            cout << "You Win!";
+            return 66;
         }
 
-        }
+        return rollnum;
+
+        }}
 
 
     return position;
@@ -61,14 +68,32 @@ int Players::Getpos() {
     return position;
 }
 
-void Players::Rolldice(Board x) {
+bool Players::Rolldice(Board x,int& result) {
     Dice v;
     int input;
-    int result = v.roll();
-    if(position + result <= x.getSize()){
-        position = position + result;
-    } else {
-        cout << "You rolled a " << result << " which is " << result - (x.getSize() - position) << "  than required, Try again!" << endl;
+    int result1;
+    result = v.roll();
+    result1 = result;
+    if(result == 6){
+        sixcounter++;
+    } else{
+        sixcounter = 0;
     }
 
+    if(sixcounter!=3) {
+
+        if (position + result <= x.getSize()) {
+            position = position + result;
+        } else {
+            cout << "You rolled a " << result << " which is " << result - (x.getSize() - position)
+                 << " more than required, Try again!" << endl;
+            return false;
+        }
+
+
+    } else {
+        result = 0;
+    }
+    cout << "You rolled: " << result1 << endl;
+    return true;
 }
