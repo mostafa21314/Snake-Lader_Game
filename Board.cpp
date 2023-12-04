@@ -163,11 +163,7 @@ void Board::Setladdertosnakeratio(float x) {
 
 }
 
-// Map vertex number (0,1,2,..) to (A,B,C,..)
-char Board::Vname(const int s) const
-{
-    return char(s+65);
-}
+
 
 // Get Graph from text File (file name is stored in string fname)
 // Graph is stored in adjacency matrix, a copy is returned in A[][]
@@ -193,7 +189,7 @@ int Board::No_of_Edges() const
 // Output an edge (e): Vertex names and weight
 void Board::printEdge(Edge e) const
 {
-    cout << Vname(e.u) << " " << Vname(e.v) << " " << e.w << endl;
+    cout << e.u << " " << e.v << " " << e.w << endl;
 }
 
 // Display Graph Edges
@@ -230,23 +226,6 @@ void Board::Boardfixer() {
             }
 
     }
-}
-
-
-void Board::replaceTileByPosition(vector <std::vector<Tile>> &board, int x, int newValue, int newdestination) {
-    for (auto& row : board) {
-        for (auto& tile : row) {
-            if (tile.pos == x) {
-                tile.type = newValue;
-                tile.destination = newdestination;
-                return; // Break out of the loop once the tile is replaced
-            }
-        }
-    }
-
-    // If control reaches here, the position was not found
-    std::cout << "Tile with position " << x << " not found." << std::endl;
-
 }
 
 void Board::addEdge(int u, int v, int weight) {
