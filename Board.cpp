@@ -1,6 +1,7 @@
 #include "Board.h"
 #include <iostream>
 #include <iomanip>
+#include <queue>
 #include <algorithm>
 
 Board::Board() {
@@ -381,6 +382,28 @@ void Board::printAdjacencyList() const {
         std::cout << std::endl;
     }
 
+}
+
+void Board :: BFS (int startVertex, int V) { //note that V is the number of vertices
+visited = new bool[V]; //visiting array
+  for (int i = 0; i < V; i++)
+    visited[i] = false; //all the vertices are unvisted
+  list<int> queue;
+  visited[startVertex] = true;
+  queue.push_back(startVertex); //beginning at the start vertex
+  list<int>::iterator i;
+  while (!queue.empty()) {
+    int currVertex = queue.front();
+    cout << "Visited " << currVertex << " ";
+    queue.pop_front();
+    for (i = adjLists[currVertex].begin(); i != adjLists[currVertex].end(); ++i) {
+      int adjVertex = *i;
+      if (!visited[adjVertex]) { //if vertex is not visited
+        visited[adjVertex] = true; //visit it
+        queue.push_back(adjVertex);
+      }
+    }
+  }
 }
 
 
