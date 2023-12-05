@@ -19,6 +19,8 @@ Searching the graph for possible moves is a core operation in Snakes and Ladders
 In conclusion, while both adjacency list and matrix can represent a Snakes and Ladders graph, the list reigns supreme for its memory efficiency as well as graph traversal efficiency.
 
 
+
+
 Paragraph for board class explaining the goal of each function.
 
 Paragraph for dice class explaining the goal of each function.
