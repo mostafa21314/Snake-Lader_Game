@@ -20,6 +20,12 @@ Snakes and Ladders, a game of chance and colorful squares, might seem like a sim
 
 In conclusion, while both adjacency list and matrix can represent a Snakes and Ladders graph, the list reigns supreme for its memory efficiency as well as graph traversal efficiency.
 
+Edge Class:
+
+This class defines the edges between any 2 nodes in the directed graph. It has 3 private variables. "u" which is the position of the current node, "v" which is the destination from the current tile which the edge points to, and "w" which is the weight of the edge. It is the distance between the 2 nodes that has edges between them. It is also of type weightType which ensures that the weight will be negative. There are also two overloaded operators which are the "<" and the "<=" operators. They allow for the comparision between the weights of the two edges.
+
+Dice Class:
+
 
 
 
