@@ -26,12 +26,13 @@ This class defines the edges between any 2 nodes in the directed graph. It has 3
 
 Dice Class:
 
+In this class, there are no class variables. We only have the constructor and the "roll" function. Both of them take no parameters. For the constructor, it seeds the random number generator with the current time using std::srand(std::time(0)). The "roll" function returns a random number between 1 and 6 inclusive which is the same as a real dice. The roll function has the complexity O(1). The dice class is resposible for rolling the dice for the players in the game. The number that gets rolled is the number of positions that the player is going to move on the board.
+
+Players class:
 
 
 
 Paragraph for board class explaining the goal of each function.
-
-Paragraph for dice class explaining the goal of each function.
 
 Paragraph for the player class explaining the goal of each function.
 
