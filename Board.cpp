@@ -264,7 +264,7 @@ void Board::printAdjacencyList() const {
 
 }
 
-void Board :: BFS (int start, vector<Edge> edges) { //algorithm for the Breadth-First Search
+void Board :: BFS (int start, list<int> map[Vmax]) { //algorithm for the Breadth-First Search
   visited = new bool[V]; //list of visited arrays
   for (int i = 0; i < V; i++)
     visited[i] = false; //mark all as unvisted
