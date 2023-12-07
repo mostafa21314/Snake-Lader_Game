@@ -30,7 +30,7 @@ In this class, there are no class variables. We only have the constructor and th
 
 Players class:
 
-This class is responsible for the players' movements. It has three private variables. Position stores the tile number of the player. Name stores the name of the player. Sixcounter stores the number of times a player rolls a 6 consequently. The overloaded constructor takes name of the player as a parameter and assigns it to the variable 'Name'. 
+This class is responsible for the players' movements. It has three private variables. Position stores the tile number of the player. Name stores the name of the player. Sixcounter stores the number of times a player rolls a 6 consequently. The overloaded constructor takes name of the player as a parameter and assigns it to the variable 'Name'.
 
 
 Paragraph for board class explaining the goal of each function.
