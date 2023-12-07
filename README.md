@@ -30,6 +30,7 @@ In this class, there are no class variables. We only have the constructor and th
 
 Players class:
 
+This class is responsible for the players' movements. 
 
 
 Paragraph for board class explaining the goal of each function.
