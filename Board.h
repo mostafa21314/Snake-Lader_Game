@@ -13,7 +13,7 @@ using namespace std;
 #include <list>
 
 
-const int Vmax = 200;					// Maximum number of vertices
+const int Vmax = 250;					// Maximum number of vertices
 const int Emax = Vmax*(Vmax-1)/2;
 struct Tile {
     int pos;
@@ -22,6 +22,8 @@ struct Tile {
 
     Tile(int x, int y, int z) : pos(x), type(y), destination(z) {}
 };
+
+
 
 class Board {
 public:

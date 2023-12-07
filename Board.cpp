@@ -164,16 +164,6 @@ void Board::Setladdertosnakeratio(float x) {
 }
 
 
-
-// Get Graph from text File (file name is stored in string fname)
-// Graph is stored in adjacency matrix, a copy is returned in A[][]
-
-
-
-// Get Non-Zero edges from adjacency matrix
-// and store them in array edges[].
-
-
 // Get number of vertices (V)
 int Board::No_of_Verices() const
 {
