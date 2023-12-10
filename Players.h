@@ -15,6 +15,7 @@ private:
     int  position;
     string Name;
     int sixcounter = 0;
+    int numofmoves = 0;
 
 public:
     Players(string name);
@@ -24,6 +25,8 @@ public:
     bool Rolldice(Board x, int&result);
 
     void updatepos(int x);
+
+    int getnumofmoves();
 
     int Getpos();
 

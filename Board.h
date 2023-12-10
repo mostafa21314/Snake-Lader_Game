@@ -47,7 +47,8 @@ public:
     void updateEdgeByU(int u, int newV, weightType newW);
     Edge findEdgeByU(int u);
     void printAdjacencyList() const;
-    void BFS (int start, list<int> map[Vmax]);
+    int BFS();
+
 
     void Boardfixer();
 
@@ -64,7 +65,9 @@ private:
     int via[Vmax];						// Via array for shortest paths
     bool processed[Vmax];				// processed array for shortest paths
     int order;							// Order of Visit of a node in the DFS
-    int val[Vmax];						// Array holding order of traversal of nodes
+    int val[Vmax];
+    std::vector<bool> visited;     // Array holding order of traversal of nodes
+    vector<int> path;
 
     void printEdge(Edge e) const;		// Output an edge (e)
 
