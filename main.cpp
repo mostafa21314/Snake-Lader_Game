@@ -20,9 +20,9 @@ int main() {
 
 
     //calling class functions to customize the board
-    x.SetDifficulty(20); // whenever the difficulty is set below 40 the bfs has issues maybe because unsolvable?
+    x.SetDifficulty(10); // whenever the difficulty is set below 40 the bfs has issues maybe because unsolvable?
     x.Setladdertosnakeratio(0.5);
-    x.generateBoard(10,10);
+    x.generateBoard(15,15);
     x.dispEdges();
     numofmoves = x.BFS();
 

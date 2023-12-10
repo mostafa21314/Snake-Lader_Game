@@ -251,7 +251,7 @@ int Board::BFS() {
         for (int i = 1; i < 6; i++) {
             nextsquare = square + i;
             difference = map[nextsquare].front() - nextsquare; // Get the difference between position and destination
-            if (difference == 1){
+            if (difference >= 1){
                 onescounter++;
 
             }
