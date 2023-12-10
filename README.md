@@ -41,6 +41,24 @@ The last function and certainly the most important function of the Player class 
 Board Class:
 This class is resposible for generating the board on which the players play. It has 2 contants of type integer, Vmax and Emax. Vmax sets the maximum size of the board and Emax calculates the maximum number of edges that can be in the board. We also have the struct tile. It has the three variables pos, destination and type. 'Pos' stores the number of the tile on the board. 'destination' stores the tile that can be reached from a tile. 'type' stores whether a tile is a normal tile, a snake or a ladder. There is also an overloaded constructor which assigns the values for the 3 variables. 
 
-There are a total of 
+There are a total of 12 private variables in the class.
+
+'V': Stores the number of edges and is of type integer.
+'edges': It is a vector of type class Edge. It stores all the edges of the graph that makes up the board.
+'map': It is an array of the type list and is used to store the adjacency list. It has the size of Vmax which is the maximum number of vertices in the graph.
+'distance':
+'via':
+'processed':
+'order': 
+'val':
+'visited':
+'path':
+'rows_': Stores the number of rows generated on the board.
+'columns_': Stores the number of columns generated on the board.
+'NORMAL_TILE_PERCENTAGE': It is an integer which is used to set the difficulty of the game. The higher the value the easier the game.
+'LaddertosnakeRatio': The higher the ratio, the more likely it is to generate a ladder instead of a snake.
+
+Now we will start discussing the functions. 
+The first function is the 'generateBoard' function. It takes two parameters as input which are the number of rows and the number of columns.
 
 Conclusion.
