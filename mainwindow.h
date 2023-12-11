@@ -34,6 +34,7 @@ class MainWindow : public QMainWindow
 public:
 
 
+    int currentPlayer=1;
     bool BSizeSet=false;
     bool NumPSet=false;
     bool DiffSet=false;
