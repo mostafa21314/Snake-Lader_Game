@@ -20,11 +20,12 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_ThrowDice_clicked()
 {
+    int x ;
+    x=dice.roll();
+
 
     if(currentPlayer==1)
     {
-    int x ;
-    x=dice.roll();
     QString temp=ui->PositionStore->text();
     Edge test=gameBoard.findEdgeByU(x+temp.toInt());
     if(test.w==1)
@@ -33,7 +34,6 @@ void MainWindow::on_ThrowDice_clicked()
         ui->PositionStore->setText(QString::number(temp.toInt()+x));
         Delay(1600);
         ui->ThrowDiceMessage->setText("");
-
 
     }
     else if(test.u<test.v)
@@ -44,6 +44,7 @@ void MainWindow::on_ThrowDice_clicked()
         Delay(1000);
         ui->ThrowDiceMessage->setText("");
 
+
     }
     else if(test.u>test.v)
     {
@@ -53,10 +54,129 @@ void MainWindow::on_ThrowDice_clicked()
         Delay(1000);
         ui->ThrowDiceMessage->setText("");
     }
+    currentPlayer++;
+    currentPlayer=(currentPlayer)%(playersNum+1);
+
+
 
     }
     else if(currentPlayer==2)
+    {
+        QString temp=ui->PositionStore_2->text();
+        Edge test=gameBoard.findEdgeByU(x+temp.toInt());
+        if(test.w==1)
+        {
+            ui->ThrowDiceMessage->setText("You threw the dice and got "+QString::number(x)+" so, your new position is "+QString::number(x+temp.toInt()));
+            ui->PositionStore_2->setText(QString::number(temp.toInt()+x));
+            Delay(1600);
+            ui->ThrowDiceMessage->setText("");
 
+        }
+        else if(test.u<test.v)
+        {
+            ui->ThrowDiceMessage->setText("You threw the dice and got "+QString::number(x)+" so, you went to \n"+QString::number(x+temp.toInt())+", and there was a ladder so you ranked up to "+QString::number(test.v));
+            Delay(500);
+            ui->PositionStore_2->setText(QString::number(test.v));
+            Delay(1000);
+            ui->ThrowDiceMessage->setText("");
+
+
+        }
+        else if(test.u>test.v)
+        {
+            ui->ThrowDiceMessage->setText("You threw the dice and got "+QString::number(x)+" so, you went to \n"+QString::number(x+temp.toInt())+", and there was a Snake so you ranked down to "+QString::number(test.v));
+            Delay(500);
+            ui->PositionStore_2->setText(QString::number(test.v));
+            Delay(1000);
+            ui->ThrowDiceMessage->setText("");
+        }
+
+
+
+
+        currentPlayer++;
+        currentPlayer=(currentPlayer)%(playersNum+1);
+
+    }
+    else if(currentPlayer==3)
+    {
+        QString temp=ui->PositionStore_3->text();
+        Edge test=gameBoard.findEdgeByU(x+temp.toInt());
+        if(test.w==1)
+        {
+            ui->ThrowDiceMessage->setText("You threw the dice and got "+QString::number(x)+" so, your new position is "+QString::number(x+temp.toInt()));
+            ui->PositionStore_3->setText(QString::number(temp.toInt()+x));
+            Delay(1600);
+            ui->ThrowDiceMessage->setText("");
+
+        }
+        else if(test.u<test.v)
+        {
+            ui->ThrowDiceMessage->setText("You threw the dice and got "+QString::number(x)+" so, you went to \n"+QString::number(x+temp.toInt())+", and there was a ladder so you ranked up to "+QString::number(test.v));
+            Delay(500);
+            ui->PositionStore_3->setText(QString::number(test.v));
+            Delay(1000);
+            ui->ThrowDiceMessage->setText("");
+
+
+        }
+        else if(test.u>test.v)
+        {
+            ui->ThrowDiceMessage->setText("You threw the dice and got "+QString::number(x)+" so, you went to \n"+QString::number(x+temp.toInt())+", and there was a Snake so you ranked down to "+QString::number(test.v));
+            Delay(500);
+            ui->PositionStore_3->setText(QString::number(test.v));
+            Delay(1000);
+            ui->ThrowDiceMessage->setText("");
+        }
+
+
+
+        currentPlayer++;
+        currentPlayer=(currentPlayer)%(playersNum+1);
+    }
+    else if(currentPlayer==4)
+
+    {
+        QString temp=ui->PositionStore_4->text();
+        Edge test=gameBoard.findEdgeByU(x+temp.toInt());
+        if(test.w==1)
+        {
+            ui->ThrowDiceMessage->setText("You threw the dice and got "+QString::number(x)+" so, your new position is "+QString::number(x+temp.toInt()));
+            ui->PositionStore_4->setText(QString::number(temp.toInt()+x));
+            Delay(1600);
+            ui->ThrowDiceMessage->setText("");
+
+        }
+        else if(test.u<test.v)
+        {
+            ui->ThrowDiceMessage->setText("You threw the dice and got "+QString::number(x)+" so, you went to \n"+QString::number(x+temp.toInt())+", and there was a ladder so you ranked up to "+QString::number(test.v));
+            Delay(500);
+            ui->PositionStore_4->setText(QString::number(test.v));
+            Delay(1000);
+            ui->ThrowDiceMessage->setText("");
+
+
+        }
+        else if(test.u>test.v)
+        {
+            ui->ThrowDiceMessage->setText("You threw the dice and got "+QString::number(x)+" so, you went to \n"+QString::number(x+temp.toInt())+", and there was a Snake so you ranked down to "+QString::number(test.v));
+            Delay(500);
+            ui->PositionStore_4->setText(QString::number(test.v));
+            Delay(1000);
+            ui->ThrowDiceMessage->setText("");
+        }
+
+
+        currentPlayer++;
+        currentPlayer=(currentPlayer)%(playersNum+1);
+    }
+
+
+
+    if(currentPlayer==0)
+    {
+        currentPlayer=1;
+    }
 }
 
 
@@ -93,6 +213,11 @@ void MainWindow::on_StartButton_clicked()
     }
 
 
+
+    if(currentPlayer==0)
+    {
+        currentPlayer=1;
+    }
 }
 
 
