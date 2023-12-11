@@ -231,52 +231,46 @@ void Board::printAdjacencyList() const {
 int Board::BFS() {
     int square;
     int difference;
-    int onescounter = 0;
     int nextsquare;
     int moves;
-    using MyTuple = std::tuple<int, std::vector<int>>; // Add a vector to store the path in a tuple
+    std::vector<int> path; // Declare 'path' variable
+    using MyTuple = std::tuple<int, std::vector<int>>;
     std::deque<MyTuple> q;
-    q.emplace_back(0, std::vector<int>{1}); // Initialize the path with the starting square
+    q.emplace_back(0, std::vector<int>{1});
 
     while (!q.empty()) {
         MyTuple frontTuple = q.front();
-        for(int i = 0;i<onescounter;i++){
-            q.pop_front();
-        }
-        onescounter = 0;
+        q.pop_front(); // Only pop once per iteration
 
-        std::tie(moves, path) = frontTuple; // Extracted both the number of moves and square and put them in variables for computations
-        square = path.back(); // Get the current square from the end of the path
+        std::tie(moves, path) = frontTuple;
+        square = path.back();
 
         for (int i = 1; i < 6; i++) {
             nextsquare = square + i;
-            difference = map[nextsquare].front() - nextsquare; // Get the difference between position and destination
-            if (difference >= 1){
-                onescounter++;
+            difference = map[nextsquare].front() - nextsquare;
 
+            if (difference >= 1) {
+                // You might want to handle this case based on your requirements
             }
 
+            nextsquare = map[nextsquare].front();
+            auto it = std::find(visited.begin(), visited.end(), nextsquare);
 
-                nextsquare = map[nextsquare].front();
-                auto it = std::find(visited.begin(), visited.end(), nextsquare); // to check if the tile has been visited
-                if (nextsquare == getSize()) {
-                    // Print both the moves and the path
-                    std::cout << "Minimum number of moves: " << moves + 1 << "\n";
-                    std::cout << "Path: ";
-                    for (int square : path) {
-                        std::cout << square << " ";
-                    }
-                    std::cout << nextsquare << "\n";
-                    return moves + 1;
-
-
-                }else if (it == visited.end()) {
-                    visited.emplace_back(nextsquare);
-                    auto new_path = path; // Copy the current path
-                    new_path.emplace_back(nextsquare); // Add the new square to the path
-                    q.emplace_back(moves + 1, new_path);
+            if (nextsquare == getSize()) {
+                // Print both the moves and the path
+                std::cout << "Minimum number of moves: " << moves + 1 << "\n";
+                std::cout << "Path: ";
+                for (int square : path) {
+                    std::cout << square << " ";
                 }
-
+                std::cout << nextsquare << "\n";
+                return moves + 1;
+            } else if (it == visited.end()) {
+                visited.emplace_back(nextsquare);
+                auto new_path = path;
+                new_path.emplace_back(nextsquare);
+                q.emplace_back(moves + 1, new_path);
+            }
         }
     }
     std::cout << "No valid path found.\n";
