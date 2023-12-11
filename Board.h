@@ -48,6 +48,7 @@ public:
     Edge findEdgeByU(int u);
     void printAdjacencyList() const;
     int BFS();
+    void BFS (int start, list<int> map[Vmax]);
 
 
     void Boardfixer();
