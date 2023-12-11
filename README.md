@@ -74,7 +74,6 @@ The first function is the 'generateBoard' function. It takes two parameters as i
 
 We also have another function which generates a random number for both the rows and columns, then calls the generate board function with the random number of rows and columns as parameters.
 
-
-
+Another major function in board class is 'Boardfixer'. This function ensures that there are no more than 5 snakes in a beside each other. 
 
 Conclusion.
