@@ -236,27 +236,23 @@ int Board::BFS() {
     std::vector<int> path; // Declare 'path' variable
     using MyTuple = std::tuple<int, std::vector<int>>;
     std::deque<MyTuple> q;
-    q.emplace_back(0, std::vector<int>{1});
+    q.emplace_back(0, std::vector<int>{1}); // initial tile is added tile 1 and we note that 0 moves have been made so far
 
     while (!q.empty()) {
-        MyTuple frontTuple = q.front();
+        MyTuple frontTuple = q.front(); // tuple copies the information from the queue
         q.pop_front(); // Only pop once per iteration
 
-        std::tie(moves, path) = frontTuple;
-        square = path.back();
+        std::tie(moves, path) = frontTuple; // information extracted
+        square = path.back(); // the square or tile we are one is then selected and saved from path
 
-        for (int i = 1; i < 6; i++) {
-            nextsquare = square + i;
-            difference = map[nextsquare].front() - nextsquare;
+        for (int i = 1; i < 6; i++) { // check all dice roll possibilities 
+            nextsquare = square + i; 
+            difference = map[nextsquare].front() - nextsquare; //finds out difference between two tiles to check if there was a snake or ladder
 
-            if (difference >= 1) {
-                // You might want to handle this case based on your requirements
-            }
+            nextsquare = map[nextsquare].front(); // new tile overrites old one
+            auto it = std::find(visited.begin(), visited.end(), nextsquare); // iterator to not visit same tile twice
 
-            nextsquare = map[nextsquare].front();
-            auto it = std::find(visited.begin(), visited.end(), nextsquare);
-
-            if (nextsquare == getSize()) {
+            if (nextsquare == getSize()) { //when finishing the board
                 // Print both the moves and the path
                 std::cout << "Minimum number of moves: " << moves + 1 << "\n";
                 std::cout << "Path: ";
@@ -265,11 +261,11 @@ int Board::BFS() {
                 }
                 std::cout << nextsquare << "\n";
                 return moves + 1;
-            } else if (it == visited.end()) {
+            } else if (it == visited.end()) { // if it reaches end then we add the tile to visited because we are finished with it
                 visited.emplace_back(nextsquare);
-                auto new_path = path;
-                new_path.emplace_back(nextsquare);
-                q.emplace_back(moves + 1, new_path);
+                auto new_path = path; // copy path
+                new_path.emplace_back(nextsquare); //add the new path
+                q.emplace_back(moves + 1, new_path); // pass the new path and start again because queue wont be empty
             }
         }
     }
