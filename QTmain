@@ -1,0 +1,82 @@
+#include "mainwindow.h"
+#include "ui_mainwindow.h"
+#include <QApplication>
+#include <QMainWindow>
+#include <QPixmap>
+#include <QPalette>
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsRectItem>
+#include <QGraphicsEllipseItem>
+#include<QBrush>
+#include <vector>
+#include <QPen>
+#include <iostream>
+#include <vector>
+#include <cstdlib>
+#include <ctime>
+#include <random>
+#include <queue>
+#include "Board.h"
+#include "dice.h"
+#include "Players.h"
+#include<QTimer>
+#include <QPainterPath>
+
+
+
+
+
+int main(int argc, char *argv[])
+{
+
+
+    QApplication a(argc, argv);
+    MainWindow w;
+    w.show();
+    w.ui->PlayerName1->hide();
+    w.ui->PlayerName2->hide();
+    w.ui->PlayerName3->hide();
+    w.ui->PlayerName4->hide();
+    w.ui->ThrowDice->hide();
+    w.ui->GraphicsView->hide();
+    w.ui->PositionLabel1->hide();
+    w.ui->PositionLabel2->hide();
+    w.ui->PositionLabel3->hide();
+    w.ui->PositionLabel4->hide();
+    w.ui->PositionStore->hide();
+    w.ui->PositionStore_2->hide();
+    w.ui->PositionStore_3->hide();
+    w.ui->PositionStore_4->hide();
+
+
+
+
+
+
+
+   // int k = set.getBoardSize();
+    QPointF startPoint(150, 350);
+    QPointF endPoint(488, 200);
+    int numBalls = 30;
+
+    w.drawSnake(startPoint, endPoint, numBalls);
+
+    QPointF ladderStart(200, 200);
+    QPointF ladderEnd(600, 500);
+    int numLadderSteps = 10;
+    qreal ladderWidth = 30;
+    qreal parallelLineWidth = 5;
+
+
+    w.drawLadder(ladderStart, ladderEnd, numLadderSteps, ladderWidth,parallelLineWidth,5);
+
+
+
+    return a.exec();
+}
+
+
+
+
+
