@@ -283,6 +283,27 @@ int Board::BFS() {
     return -1;
 }
 
+void Board :: BFS (int start, list<int> map[Vmax]) { //algorithm for the Breadth-First Search
+  visited = new bool[V]; //list of visited arrays
+  for (int i = 0; i < V; i++)
+    visited[i] = false; //mark all as unvisted
+  list<int> queue; //queue of all nodes
+  visited[start] = true; //mark the source node as already visited
+  queue.push_back(start); //make start the first node in queue
+  list<int>::iterator i; //iterator to traverse the queue
+  while (!queue.empty()) { //while there are still nodes to explore
+    int currVertex = queue.front(); //get the front
+    cout << "Visited " << currVertex << " "; //front now visited (WE WON'T NEED IT LATER)
+    queue.pop_front(); //remove from queue
+    for (i = map[currVertex].begin(); i != map[currVertex].end(); ++i) {
+      int adjVertex = *i; //get index of adjacent vertex
+      if (!visited[adjVertex]) { //if it hasn't been visited
+        visited[adjVertex] = true; //visit it
+        queue.push_back(adjVertex); //put it in the queue
+      }
+    }
+  }
+}
 
 Board::~Board() {
 
